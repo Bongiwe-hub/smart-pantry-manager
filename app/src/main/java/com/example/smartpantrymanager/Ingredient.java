@@ -1,8 +1,6 @@
 package com.example.smartpantrymanager;
 
 
-package com.example.smartpantrymanager;
-
 // Represents one ingredient in the user's pantry.
 public class Ingredient {
 

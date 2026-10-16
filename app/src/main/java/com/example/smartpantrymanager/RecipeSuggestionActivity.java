@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.app.AlertDialog;
+import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -83,13 +83,34 @@ public class RecipeSuggestionActivity extends AppCompatActivity {
         // Display recipe details when the user taps a recipe.
         recipeListView.setOnItemClickListener(
                 (parent, view, position, id) -> {
+                    Recipe selectedRecipe = matchingRecipes.get(position);
 
-                    // Get the selected recipe.
-                    Recipe selectedRecipe =
-                            matchingRecipes.get(position);
+                    StringBuilder ingredientsText = new StringBuilder();
+                    for (String ingredient :
+                            selectedRecipe.getRequiredIngredients()) {
+                        ingredientsText.append("• ")
+                                .append(ingredient)
+                                .append("\n");
+                    }
 
-                    // Open a dialog containing its details.
-                    showRecipeDetails(selectedRecipe);
+                    Intent intent = new Intent(
+                            RecipeSuggestionActivity.this,
+                            RecipeDetailActivity.class
+                    );
+                    intent.putExtra(
+                            RecipeDetailActivity.EXTRA_RECIPE_NAME,
+                            selectedRecipe.getName()
+                    );
+                    intent.putExtra(
+                            RecipeDetailActivity.EXTRA_RECIPE_INGREDIENTS,
+                            ingredientsText.toString()
+                    );
+                    intent.putExtra(
+                            RecipeDetailActivity.EXTRA_RECIPE_STEPS,
+                            selectedRecipe.getPreparationSteps()
+                    );
+
+                    startActivity(intent);
                 }
         );
     }
@@ -184,31 +205,5 @@ public class RecipeSuggestionActivity extends AppCompatActivity {
     }
 
     // Displays the ingredients and preparation instructions.
-    private void showRecipeDetails(Recipe recipe) {
-
-        // Read the required ingredients.
-        StringBuilder ingredientsText = new StringBuilder();
-
-        for (String ingredient :
-                recipe.getRequiredIngredients()) {
-
-            ingredientsText.append("• ")
-                    .append(ingredient)
-                    .append("\n");
-        }
-
-        // Combine the recipe information into one message.
-        String details =
-                "Required ingredients:\n"
-                        + ingredientsText
-                        + "\nPreparation steps:\n"
-                        + recipe.getPreparationSteps();
-
-        // Display the selected recipe in a dialog.
-        new AlertDialog.Builder(this)
-                .setTitle(recipe.getName())
-                .setMessage(details)
-                .setPositiveButton("Close", null)
-                .show();
-    }
+     }
 }
