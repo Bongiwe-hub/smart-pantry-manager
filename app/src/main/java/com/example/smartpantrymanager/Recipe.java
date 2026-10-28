@@ -9,20 +9,20 @@ public class Recipe {
     // Unique identification number for the recipe.
     private int id;
 
-    // Name of the recipe, for example "Vegetable Omelette".
+    // Name of the recipe.
     private String name;
 
-    // Names of the ingredients needed to prepare the recipe.
-    private ArrayList<String> requiredIngredients;
+    // Ingredients required, including their quantities and units.
+    private ArrayList<RecipeIngredient> requiredIngredients;
 
     // Instructions explaining how to prepare the recipe.
     private String preparationSteps;
 
-    // Constructor used to create a new recipe.
+    // Creates a recipe with ingredient quantities.
     public Recipe(
             int id,
             String name,
-            ArrayList<String> requiredIngredients,
+            ArrayList<RecipeIngredient> requiredIngredients,
             String preparationSteps) {
 
         this.id = id;
@@ -31,38 +31,38 @@ public class Recipe {
         this.preparationSteps = preparationSteps;
     }
 
-    // Returns the recipe's ID.
+    // Returns the recipe ID.
     public int getId() {
         return id;
     }
 
-    // Updates the recipe's ID.
+    // Updates the recipe ID.
     public void setId(int id) {
         this.id = id;
     }
 
-    // Returns the recipe's name.
+    // Returns the recipe name.
     public String getName() {
         return name;
     }
 
-    // Updates the recipe's name.
+    // Updates the recipe name.
     public void setName(String name) {
         this.name = name;
     }
 
-    // Returns the list of required ingredients.
-    public ArrayList<String> getRequiredIngredients() {
+    // Returns the ingredients and amounts needed.
+    public ArrayList<RecipeIngredient> getRequiredIngredients() {
         return requiredIngredients;
     }
 
-    // Updates the required ingredients.
+    // Updates the recipe's ingredient requirements.
     public void setRequiredIngredients(
-            ArrayList<String> requiredIngredients) {
+            ArrayList<RecipeIngredient> requiredIngredients) {
         this.requiredIngredients = requiredIngredients;
     }
 
-    // Returns the recipe preparation instructions.
+    // Returns the preparation instructions.
     public String getPreparationSteps() {
         return preparationSteps;
     }
@@ -72,7 +72,7 @@ public class Recipe {
         this.preparationSteps = preparationSteps;
     }
 
-    // Displays the recipe name when the object is shown as text.
+    // Displays the recipe name when shown as text.
     @Override
     public String toString() {
         return name;
