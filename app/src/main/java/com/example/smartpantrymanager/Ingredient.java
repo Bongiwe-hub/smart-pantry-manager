@@ -1,25 +1,27 @@
+
 package com.example.smartpantrymanager;
 
+import java.util.Locale;
 
-// Represents one ingredient in the user's pantry.
+// Represents one ingredient stored in the user's pantry.
 public class Ingredient {
 
-    // Unique identifier for the ingredient.
+    // Unique database identifier for this ingredient.
     private int id;
 
-    // Name of the ingredient, for example "Tomato".
+    // Ingredient name, for example "Tomato".
     private String name;
 
-    // Quantity available in the pantry.
+    // Amount available in the pantry.
     private double quantity;
 
-    // Unit used to measure the quantity, such as "grams".
+    // Measurement unit, such as "grams", "ml", or "pieces".
     private String unit;
 
-    // Expiry date, if known.
+    // Expiry date, if the user has provided one.
     private String expiryDate;
 
-    // Constructor: initializes an ingredient object.
+    // Creates an ingredient with all its details.
     public Ingredient(int id, String name, double quantity,
                       String unit, String expiryDate) {
         this.id = id;
@@ -29,55 +31,80 @@ public class Ingredient {
         this.expiryDate = expiryDate;
     }
 
-    // Gets the ingredient's unique identifier.
+    // Returns the ingredient's ID.
     public int getId() {
         return id;
     }
 
-    // Gets the ingredient's name.
+    // Updates the ingredient's ID, for example after database insertion.
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    // Returns the ingredient's name.
     public String getName() {
         return name;
     }
 
-    // Changes the ingredient's name.
+    // Updates the ingredient's name.
     public void setName(String name) {
         this.name = name;
     }
 
-    // Gets the available quantity.
+    // Returns the available quantity.
     public double getQuantity() {
         return quantity;
     }
 
-    // Changes the available quantity.
+    // Updates the available quantity.
     public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 
-    // Gets the measurement unit.
+    // Returns the measurement unit.
     public String getUnit() {
         return unit;
     }
 
-    // Changes the measurement unit.
+    // Updates the measurement unit.
     public void setUnit(String unit) {
         this.unit = unit;
     }
 
-    // Gets the expiry date.
+    // Returns the expiry date.
     public String getExpiryDate() {
         return expiryDate;
     }
 
-    // Changes the expiry date.
+    // Updates the expiry date.
     public void setExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
     }
 
-    // Returns a readable description of the ingredient.
+    // Checks whether another name refers to this same ingredient.
+    // For example, "Tomato" and "tomato" will match.
+    public boolean hasSameName(String otherName) {
+        return otherName != null
+                && name != null
+                && name.trim().toLowerCase(Locale.ROOT)
+                .equals(otherName.trim().toLowerCase(Locale.ROOT));
+    }
+
+    // Returns a readable description for the pantry list.
+    // Displays the ingredient neatly in the pantry list.
     @Override
     public String toString() {
-        return name + " - " + quantity + " " + unit;
-    }
-}
 
+        // Display whole quantities without unnecessary decimal places.
+        String formattedQuantity;
+
+        if (quantity == Math.floor(quantity)) {
+            formattedQuantity = String.valueOf((long) quantity);
+        } else {
+            formattedQuantity = String.valueOf(quantity);
+        }
+
+        return name + " - " + formattedQuantity + " " + unit;
+    }
+
+}
